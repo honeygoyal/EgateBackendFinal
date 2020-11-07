@@ -15,11 +15,6 @@ import com.egatetutor.backend.repository.UserRepository;
 import com.egatetutor.backend.service.UserService;
 import com.egatetutor.backend.util.JwtTokenUtil;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.apache.commons.io.FileUtils;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +40,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@CrossOrigin(origins = "https://trusting-euclid-a0c1c2.netlify.app")
 @RestController
 @RequestMapping("/users")
 public class UserController {
