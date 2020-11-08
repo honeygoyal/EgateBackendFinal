@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "https://trusting-euclid-a0c1c2.netlify.app")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {

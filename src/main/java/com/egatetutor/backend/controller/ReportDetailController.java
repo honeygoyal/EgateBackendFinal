@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 
-@CrossOrigin(origins = "https://trusting-euclid-a0c1c2.netlify.app")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/reportDetail")
 public class ReportDetailController {

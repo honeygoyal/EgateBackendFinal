@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "https://trusting-euclid-a0c1c2.netlify.app")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/coursesDetail")
 public class CoursesDescriptionController {
