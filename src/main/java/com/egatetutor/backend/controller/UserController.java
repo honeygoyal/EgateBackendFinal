@@ -1,9 +1,5 @@
 package com.egatetutor.backend.controller;
 
-import javax.imageio.ImageIO;
-import javax.validation.Valid;
-import javax.validation.constraints.Null;
-
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
@@ -27,10 +23,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +37,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {

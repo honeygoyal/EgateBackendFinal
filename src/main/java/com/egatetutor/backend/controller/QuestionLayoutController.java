@@ -45,7 +45,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/questionLayout")
 public class QuestionLayoutController {

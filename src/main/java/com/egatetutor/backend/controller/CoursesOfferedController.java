@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/coursesOffered")
 public class CoursesOfferedController {

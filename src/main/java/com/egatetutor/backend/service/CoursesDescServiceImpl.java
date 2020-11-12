@@ -70,6 +70,7 @@ public class CoursesDescServiceImpl implements CoursesDescriptionService {
 	@Override
 	public List<CourseDescStatusResponse> getCoursesByExamCode(String examCode, String email) throws Exception {
 		CoursesOffered coursesOffered = coursesOfferedRepository.findByExamCode(examCode);
+		if(coursesOffered == null) return null;
 		return getCourses(coursesOffered.getId(), email);
 	}
 
