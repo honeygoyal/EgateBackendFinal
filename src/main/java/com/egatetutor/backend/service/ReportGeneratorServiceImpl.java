@@ -1,5 +1,9 @@
 package com.egatetutor.backend.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.IOUtils;
 import com.egatetutor.backend.enumType.CoursesStatus;
 import com.egatetutor.backend.enumType.QuestionStatus;
 import com.egatetutor.backend.enumType.QuestionType;
@@ -7,17 +11,16 @@ import com.egatetutor.backend.model.QuestionLayout;
 import com.egatetutor.backend.model.ReportDetail;
 import com.egatetutor.backend.model.ReportOverall;
 import com.egatetutor.backend.model.responsemodel.QuestionAnalysis;
-import com.egatetutor.backend.model.responsemodel.UserRank;
 import com.egatetutor.backend.model.responsemodel.TestAnalytics;
+import com.egatetutor.backend.model.responsemodel.UserRank;
 import com.egatetutor.backend.repository.QuestionLayoutRepository;
 import com.egatetutor.backend.repository.ReportDetailRepository;
 import com.egatetutor.backend.repository.ReportOverallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,13 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
 
     @Autowired
     QuestionLayoutRepository questionLayoutRepository;
+
+
+    @Autowired
+    private AmazonS3 s3client;
+
+    @Value("${jsa.s3.bucket}")
+    private String bucketName;
 
     @Override
     public List<QuestionAnalysis> getQuestionAnalysis(Long userId, Long courseId) throws Exception {
@@ -170,14 +180,17 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
     }
 
     public QuestionLayout calculatePath(QuestionLayout questionLayout) throws IOException {
-        Path quePath = Paths.get(questionLayout.getQuestion() + ".png");
-        Path solPath = Paths.get(questionLayout.getSolution() + ".png");
-        byte[] imageque = Files.readAllBytes(quePath);
-        byte[] imagesol = Files.readAllBytes(solPath);
+        S3Object questObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getQuestion()));
+        S3Object solObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getSolution()));
+        try{
+        byte[] imageque =   IOUtils.toByteArray(questObject.getObjectContent());  //Files.readAllBytes(quePath);
+        byte[] imagesol = IOUtils.toByteArray(solObject.getObjectContent()); // Files.readAllBytes(solPath);
         String encodedQuestion = Base64.getEncoder().encodeToString(imageque);
         String encodedSolution = Base64.getEncoder().encodeToString(imagesol);
         questionLayout.setQuestion(encodedQuestion);
-        questionLayout.setSolution(encodedSolution);
+        questionLayout.setSolution(encodedSolution);}catch (Exception exception){
+            System.out.println(""+ exception);
+        }
         return  questionLayout;
     }
 }
