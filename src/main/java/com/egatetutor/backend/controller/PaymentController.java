@@ -62,8 +62,8 @@ public class PaymentController {
             orderRequest.put("currency", createOrder.getCurrency());
             orderRequest.put("receipt", createOrder.getReceipt());
             orderRequest.put("payment_capture", 1);
-        
-            String result= order.get("id");//"{orderId:"+order.get("id")+"}";
+            Order order =  razorpay.Orders.create(orderRequest);
+            String result= order.get("id");
             orderRequest.put("orderId",result);
             return ResponseEntity.status(HttpStatus.OK).body(orderRequest.toString());
     }
