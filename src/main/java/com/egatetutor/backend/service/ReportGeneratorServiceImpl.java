@@ -140,9 +140,23 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
                     if (score[0] != p.getScore()) rank[0] = no[0];
                     p.setUserRank(rank[0]);
                     score[0] = p.getScore();
+                    String photo = p.getUserId().getPhoto();
+                    String profileString = null;
+                    if(photo!=null){
+                        S3Object profileObj = s3client.getObject(new GetObjectRequest(bucketName, photo));
+                        byte[] profileImage = new byte[0];
+                        try {
+                            profileImage = IOUtils.toByteArray(profileObj.getObjectContent());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        profileString = Base64.getEncoder().encodeToString(profileImage);
+                    }
                     return new UserRank(p.getUserId().getName(),p.getUserId().getId(), p.getCourseId().getTitle(),
                             p.getCourseId().getTotalMarks(),
-                            p.getScore(), p.getTotalTime(), p.getCourseId().getDuration(), p.getUserRank());
+                            p.getScore(), p.getTotalTime(), p.getCourseId().getDuration(), p.getUserRank(), profileString
+
+                    );
                 }).collect(Collectors.toList());
 
         return userRankList;

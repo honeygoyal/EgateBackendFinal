@@ -9,8 +9,9 @@ public class UserRank {
     String yourTime;
     String totalTime;
     Long rank;
+    String photo;
 
-    public UserRank(String name, Long userId, String examName, double totalMarks, double yourMarks, String yourTime, String totalTime, Long rank) {
+    public UserRank(String name, Long userId, String examName, double totalMarks, double yourMarks, String yourTime, String totalTime, Long rank, String photo) {
         this.name = name;
         this.userId = userId;
         this.examName = examName;
@@ -19,6 +20,7 @@ public class UserRank {
         this.yourTime = yourTime;
         this.totalTime = totalTime;
         this.rank = rank;
+        this.photo = photo;
     }
 
     public String getName() {
@@ -83,5 +85,13 @@ public class UserRank {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
