@@ -2,18 +2,15 @@ package com.egatetutor.backend.controller;
 
 
 import com.egatetutor.backend.model.CoursesDescription;
-import com.egatetutor.backend.model.CoursesOffered;
 import com.egatetutor.backend.model.responsemodel.CourseDescStatusResponse;
-import com.egatetutor.backend.model.responsemodel.CourseDescriptionResponse;
 import com.egatetutor.backend.repository.CoursesOfferedRepository;
 import com.egatetutor.backend.service.CoursesDescriptionService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
