@@ -20,7 +20,7 @@ public class BookController {
     BookRepository bookRepository;
 
 
-    @GetMapping("/getDownloadByExamAndTopic")
+    @GetMapping("/geAllBooks")
     public ResponseEntity<List<Books>> getAllBooks() {
         List<Books> bookList = bookRepository.findBooksByImageUrlExists();
         return ResponseEntity.status(HttpStatus.OK).body(bookList);
