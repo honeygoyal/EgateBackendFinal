@@ -28,7 +28,8 @@ public class Download {
         private String exam;
         @Column(name = "topic")
         private String topic;
-
+        @Column(name = "branch")
+        private String branch;
         public long getId() {
                 return id;
         }
@@ -115,5 +116,13 @@ public class Download {
 
         public void setTopic(String topic) {
                 this.topic = topic;
+        }
+
+        public String getBranch() {
+                return branch;
+        }
+
+        public void setBranch(String branch) {
+                this.branch = branch;
         }
 }

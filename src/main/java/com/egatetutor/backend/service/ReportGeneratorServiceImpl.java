@@ -193,7 +193,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
         return isCorrect;
     }
 
-    public QuestionLayout calculatePath(QuestionLayout questionLayout) throws IOException {
+    public QuestionLayout calculatePath(QuestionLayout questionLayout) {
         S3Object questObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getQuestion()));
         S3Object solObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getSolution()));
         try{
@@ -202,7 +202,8 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
         String encodedQuestion = Base64.getEncoder().encodeToString(imageque);
         String encodedSolution = Base64.getEncoder().encodeToString(imagesol);
         questionLayout.setQuestion(encodedQuestion);
-        questionLayout.setSolution(encodedSolution);}catch (Exception exception){
+        questionLayout.setSolution(encodedSolution);}
+        catch (Exception exception){
             System.out.println(""+ exception);
         }
         return  questionLayout;

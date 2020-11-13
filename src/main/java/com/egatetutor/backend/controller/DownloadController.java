@@ -20,8 +20,9 @@ public class DownloadController {
     DownloadRepository downloadRepository;
 
     @GetMapping("/getDownloadByExamAndTopic")
-    public ResponseEntity<List<Download>> getDownloadByExamAndTopic(@RequestParam("exam") String exam, @RequestParam("topic") String topic) {
-        List<Download> downloadList = downloadRepository.findDownloadByExamAndTopic(exam, topic);
+    public ResponseEntity<List<Download>> getDownloadByExamAndTopic(@RequestParam("exam") String exam, @RequestParam("topic") String topic,
+                                                                    @RequestParam("branch") String branch) {
+        List<Download> downloadList = downloadRepository.findDownloadByExamAndTopicAndBranch(exam, topic, branch);
         return ResponseEntity.status(HttpStatus.OK).body(downloadList);
     }
 }
