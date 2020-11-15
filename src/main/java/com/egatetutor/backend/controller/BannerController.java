@@ -20,7 +20,7 @@ public class BannerController {
     BannerRepository bannerRepository;
 
 
-    @GetMapping("/geAllBanner")
+    @GetMapping("/getAllBanner")
     public ResponseEntity<List<Banner>> getAllBooks() {
         List<Banner> bookList = bannerRepository.findBannerByImageUrlExists();
         return ResponseEntity.status(HttpStatus.OK).body(bookList);
