@@ -49,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/", "/resources/**", "/static/**", "/public/**", "/webui/**", "/h2-console/**"
 				, "/configuration/**", "/swagger-ui/**", "/swagger-resources/**", "/api-docs", "/api-docs/**", "/v2/api-docs/**"
-				, "/*.html", "/**/*.html" ,"/**/*.css","/**/*.js","/**/*.png","/**/*.jpg", "/**/*.gif", "/**/*.svg", "/**/*.ico", "/**/*.ttf","/**/*.woff","/**/*.otf");
+				, "/*.html", "/**/*.html" ,"/**/*.css","/**/*.js","/**/*.png","/**/*.jpg", "/**/*.gif", "/**/*.svg", "/**/*.ico",
+				"/**/*.ttf","/**/*.woff","/**/*.otf", "/books/**", "/download/**", "/banner/**");
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 				.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 		http.headers().frameOptions().disable();
-		http.authorizeRequests().antMatchers("/users/**").permitAll()
+		http.authorizeRequests().antMatchers("/users/**","/books/**", "/download/**", "/banner/**").permitAll()
 		.anyRequest().authenticated()
 		.and().
 		exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
