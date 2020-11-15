@@ -8,26 +8,20 @@ public class Download {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id",  nullable = false, updatable = false)
         private long id;
-        @Column(name = "heading1")
-        private String heading1;
-        @Column(name = "heading2")
-        private String heading2;
-        @Column(name = "heading3")
-        private String heading3;
         @Column(name = "label1")
         private String label1;
         @Column(name = "label2")
         private String label2;
-        @Column(name = "label3")
-        private String label3;
+        @Column(name = "topic")
+        private String topic;
         @Column(name = "URL1")
         private String URL1;
         @Column(name = "URL2")
         private String URL2;
         @Column(name = "exam")
         private String exam;
-        @Column(name = "topic")
-        private String topic;
+        @Column(name = "subsection")
+        private String subsection;
         @Column(name = "branch")
         private String branch;
         public long getId() {
@@ -36,30 +30,6 @@ public class Download {
 
         public void setId(long id) {
                 this.id = id;
-        }
-
-        public String getHeading1() {
-                return heading1;
-        }
-
-        public void setHeading1(String heading1) {
-                this.heading1 = heading1;
-        }
-
-        public String getHeading2() {
-                return heading2;
-        }
-
-        public void setHeading2(String heading2) {
-                this.heading2 = heading2;
-        }
-
-        public String getHeading3() {
-                return heading3;
-        }
-
-        public void setHeading3(String heading3) {
-                this.heading3 = heading3;
         }
 
         public String getLabel1() {
@@ -78,12 +48,12 @@ public class Download {
                 this.label2 = label2;
         }
 
-        public String getLabel3() {
-                return label3;
+        public String getTopic() {
+                return topic;
         }
 
-        public void setLabel3(String label3) {
-                this.label3 = label3;
+        public void setTopic(String label3) {
+                this.topic = label3;
         }
 
         public String getURL1() {
@@ -110,12 +80,12 @@ public class Download {
                 this.exam = exam;
         }
 
-        public String getTopic() {
-                return topic;
+        public String getSubsection() {
+                return subsection;
         }
 
-        public void setTopic(String topic) {
-                this.topic = topic;
+        public void setSubsection(String topic) {
+                this.subsection = topic;
         }
 
         public String getBranch() {

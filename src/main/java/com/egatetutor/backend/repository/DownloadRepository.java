@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface DownloadRepository extends CrudRepository<Download, Long> {
-    @Query(value = "SELECT * FROM download C WHERE C.exam = :exam AND C.topic = :topic AND C.branch = :branch", nativeQuery = true)
-    List<Download> findDownloadByExamAndTopicAndBranch(@Param("exam")String exam, @Param("topic") String topic,
+    @Query(value = "SELECT * FROM download C WHERE C.exam = :exam AND C.subsection = :subsection AND C.branch = :branch", nativeQuery = true)
+    List<Download> findDownloadByExamAndSubsectionAndBranch(@Param("exam")String exam, @Param("subsection") String subsection,
                                                        @Param("branch") String branch);
 }

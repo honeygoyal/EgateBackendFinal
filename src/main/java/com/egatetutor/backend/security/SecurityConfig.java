@@ -57,8 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 				.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 		http.headers().frameOptions().disable();
-		http.authorizeRequests().antMatchers("/users/**", "/banner/**", "/books/**",
-				"/download/**").permitAll()
+		http.authorizeRequests().antMatchers("/users/**").permitAll()
 		.anyRequest().authenticated()
 		.and().
 		exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
