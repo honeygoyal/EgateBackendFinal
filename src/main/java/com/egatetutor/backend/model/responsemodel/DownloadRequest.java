@@ -1,7 +1,5 @@
 package com.egatetutor.backend.model.responsemodel;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class DownloadRequest {
 
     private String label1;
@@ -10,8 +8,6 @@ public class DownloadRequest {
     private String exam;
     private String subsection;
     private String branch;
-    MultipartFile label1File;
-    MultipartFile label2File;
     public String getLabel1() {
         return label1;
     }
