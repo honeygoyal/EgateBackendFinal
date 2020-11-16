@@ -47,13 +47,12 @@ public class DownloadController {
 
     @PostMapping("/uploadMaterial")
     @ApiOperation(value = "Make a POST request to upload the file",
-            produces = "text/plain", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+            produces = "text/plain", consumes = MediaType.MULTIPART_MIXED_VALUE)
     @RequestMapping(value = "uploadMaterial", method = RequestMethod.POST)
-    public ResponseEntity uploadProfileData(
+    public ResponseEntity uploadMaterial(
             @RequestPart(value = "label1File", required = true) MultipartFile label1File,
             @RequestPart(value = "label2File", required = true) MultipartFile label2File,
-            @RequestBody DownloadRequest
-            downloadRequest
+            DownloadRequest downloadRequest
             ) throws IOException {
         String BASE_URL = env.getProperty("download_url");
         InputStream stream = new ByteArrayInputStream(label1File.getBytes());
