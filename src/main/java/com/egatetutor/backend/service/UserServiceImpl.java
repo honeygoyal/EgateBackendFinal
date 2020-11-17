@@ -56,11 +56,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	{
 			try {
 				Properties props = System.getProperties();
-				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.smtp.auth", env.getProperty("spring.mail.properties.mail.smtp.auth"));
+				props.put("mail.smtp.starttls.enable", env.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
 				props.put("mail.host", env.getProperty("spring.mail.host"));
 				props.put("mail.port", env.getProperty("spring.mail.port"));
 				props.setProperty("mail.transport.protocol", "smtp");
+				props.setProperty("mail.smtp.ssl.enable",env.getProperty("spring.mail.properties.mail.smtp.ssl.enable"));
+				props.setProperty("mail.smtp.ssl.trust",env.getProperty("spring.mail.properties.mail.smtp.ssl.trust"));
 
 				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
