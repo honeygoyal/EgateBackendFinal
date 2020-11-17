@@ -3,17 +3,17 @@ package com.egatetutor.backend.service;
 
 
 import com.egatetutor.backend.enumType.CoursesStatus;
-import com.egatetutor.backend.model.*;
+import com.egatetutor.backend.model.CoursesDescription;
+import com.egatetutor.backend.model.CoursesOffered;
+import com.egatetutor.backend.model.ReportOverall;
+import com.egatetutor.backend.model.UserInfo;
 import com.egatetutor.backend.model.responsemodel.CourseDescStatusResponse;
 import com.egatetutor.backend.repository.*;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,9 +51,13 @@ public class CoursesDescServiceImpl implements CoursesDescriptionService {
 			if(!examIdSet.contains(examId)){
 				testResponseModel.setStatus(CoursesStatus.INACTIVE.name());
 			}else{
+				if(!userInfo.isVerified() && !userInfo.getIsAdmin())
+					testResponseModel.setStatus(CoursesStatus.USER_UNVERIFIED.name());
+				else{
 				ReportOverall reportOverall = reportOverallRepository.findReportByCompositeId(userInfo.getId(), coursesDescription.getId());
 				String status = (reportOverall != null)? reportOverall.getStatus(): CoursesStatus.START.name();
 				testResponseModel.setStatus(status);
+				}
 			}
 			testResponseArray.add(testResponseModel);
 		}

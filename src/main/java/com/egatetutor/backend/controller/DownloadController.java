@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/download")
 public class DownloadController {
@@ -52,26 +53,26 @@ public class DownloadController {
     public ResponseEntity uploadMaterial(
             @RequestPart(value = "label1File", required = true) MultipartFile label1File,
             @RequestPart(value = "label2File", required = true) MultipartFile label2File,
-            DownloadRequest downloadRequest
+             DownloadRequest downloadRequest
             ) throws IOException {
         String BASE_URL = env.getProperty("download_url");
         InputStream stream = new ByteArrayInputStream(label1File.getBytes());
         ObjectMetadata meta = new ObjectMetadata();
         String fileName1 = downloadRequest.getExam() +"_"+downloadRequest.getBranch()+"_"
                 +downloadRequest.getSubsection()+"_"+downloadRequest.getTopic()
-                +"_"+downloadRequest.getLabel1();
+                +"_"+downloadRequest.getLabel1()+".pdf";
         s3client.putObject(new PutObjectRequest(
                 bucketName, fileName1, stream, meta)
-                .withCannedAcl(CannedAccessControlList.Private));
+                .withCannedAcl(CannedAccessControlList.PublicRead));
         stream.close();
         InputStream stream2 = new ByteArrayInputStream(label2File.getBytes());
         ObjectMetadata meta2 = new ObjectMetadata();
         String fileName2 = downloadRequest.getExam() +"_"+downloadRequest.getBranch()+"_"
                 +downloadRequest.getSubsection()+"_"+downloadRequest.getTopic()
-                +"_"+downloadRequest.getLabel2();
+                +"_"+downloadRequest.getLabel2()+".pdf";
         s3client.putObject(new PutObjectRequest(
                 bucketName, fileName2, stream2, meta2)
-                .withCannedAcl(CannedAccessControlList.Private));
+                .withCannedAcl(CannedAccessControlList.PublicRead));
         stream2.close();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
