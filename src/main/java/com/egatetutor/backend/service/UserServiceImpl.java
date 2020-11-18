@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -53,60 +54,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	{
 			try {
 				SimpleMailMessage message1 = new SimpleMailMessage();
+				String messageText ="Dear GATE aspirant, <br/>" +
+						"<br/>" +
+						"Congratulations!!! <br/>" +
+						"You have successfully registered eGATE Tutor. <br/>" +
+						"\r\n" +
+						"Login Credentials: <br/>" +
+						"User Name  :    " + userDetails.getEmailId() + "<br/>" +
+						"Password    :    " + password + "<br/>" +
+						"Click here to Login <br/>" +
+						"OR www.egatetutor.in/ <br/>" +
+						"<br/>" +
+						"Note: <br/>" +
+						"Visit FAQs section on www.egatetutor.in <br/>" +
+						"Admission issues related Queries: support@egatetutor.in <br/>" +
+						"Technical Issues related Queries: egatetutor@gmail.com <br/>" +
+						"(In case of queries call between 10:00 AM to 6:00 PM. Mon - Sun) <br/>" +
+						"For more information regarding GATE, iPATE, PSU prepration. Connect with us:\n" +
+						"Website: http://www.egatetutor.in/ <br/>" +
+						"Facebook: https://www.facebook.com/egate.tutor.18 <br/>" +
+						"Instagram: https://www.instagram.com/egatetutor/ <br/>" +
+						"eGATETutor<br/>" +
+						"Support Team eGATETutor";
 				message1.setTo(userDetails.getEmailId());
-				message1.setFrom(env.getProperty("spring.mail.username"));
-				message1.setSubject("Hi");
-				message1.setText("Helllppppp ");
+				message1.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
+				message1.setSubject("eGATE Tutor Login Credential");
+				message1.setText(messageText);
 				javaMailSender.send(message1);
-//				Properties props = System.getProperties();
-//				props.put("mail.smtp.auth", env.getProperty("spring.mail.properties.mail.smtp.auth"));
-//				props.put("mail.smtp.starttls.enable", env.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
-//				props.put("mail.host", env.getProperty("spring.mail.host"));
-//				props.put("mail.port", env.getProperty("spring.mail.port"));
-//				props.setProperty("mail.transport.protocol", "smtp");
-//				props.setProperty("mail.smtp.ssl.enable",env.getProperty("spring.mail.properties.mail.smtp.ssl.enable"));
-//				props.setProperty("mail.smtp.ssl.trust",env.getProperty("spring.mail.properties.mail.smtp.ssl.trust"));
-//
-//				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-//					protected PasswordAuthentication getPasswordAuthentication() {
-//						return new PasswordAuthentication(env.getProperty("spring.mail.username"), env.getProperty("spring.mail.password"));
-//					}
-//				});
-//				Message msg = new MimeMessage(session);
-//				msg.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), false));
-//				String email = userDetails.getEmailId();
-//
-//				msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-//				msg.setSubject("eGATE Tutor Login Credential");
-//				String message ="Dear GATE aspirant, <br/>" +
-//						"<br/>" +
-//						"Congratulations!!! <br/>" +
-//						"You have successfully registered eGATE Tutor. <br/>" +
-//						"\r\n" +
-//						"Login Credentials: <br/>" +
-//						"User Name  :    " + email + "<br/>" +
-//						"Password    :    " + password + "<br/>" +
-//						"Click here to Login <br/>" +
-//						"OR www.egatetutor.in/ <br/>" +
-//						"<br/>" +
-//						"Note: <br/>" +
-//						"Visit FAQs section on www.egatetutor.in <br/>" +
-//						"Admission issues related Queries: support@egatetutor.in <br/>" +
-//						"Technical Issues related Queries: egatetutor@gmail.com <br/>" +
-//						"(In case of queries call between 10:00 AM to 6:00 PM. Mon - Sun) <br/>" +
-//						"For more information regarding GATE, iPATE, PSU prepration. Connect with us:\n" +
-//						"Website: http://www.egatetutor.in/ <br/>" +
-//						"Facebook: https://www.facebook.com/egate.tutor.18 <br/>" +
-//						"Instagram: https://www.instagram.com/egatetutor/ <br/>" +
-//						"eGATETutor<br/>" +
-//						"Support Team eGATETutor";
-//
-//				msg.setContent(message, "text/html");
-//
-//				msg.setSentDate(new Date());
-//				Transport transport = session.getTransport("smtp");
-//				transport.send(msg, msg.getRecipients(Message.RecipientType.TO));
-//				transport.close();
 			}catch (Exception e){
 				System.out.println("Failed to send Email : " + e.getMessage() +" "+ e);
 			}
