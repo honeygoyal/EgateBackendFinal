@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     "For more information regarding GATE, iPATE, PSU prepration. Connect with us: \r\n" +
                     "Website: http://www.egatetutor.in/ \r\n" +
                     "Facebook: https://www.facebook.com/egate.tutor.18 \r\n" +
-                    "Instagram: https://www.instagram.com/egatetutor/ \r\n" +
+                    "Instagram: https://www.instagram.com/egatetutor/ \r\n \r\n" +
                     "eGATETutor \r\n" +
                     "Support Team eGATETutor";
             message1.setTo(userDetails.getEmailId());
