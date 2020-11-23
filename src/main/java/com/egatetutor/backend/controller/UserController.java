@@ -223,4 +223,10 @@ public class UserController {
         userRepository.save(user);
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<String> forgotPassword(String emailId) throws Exception {
+        userService.forgotPassword(emailId);
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
 }

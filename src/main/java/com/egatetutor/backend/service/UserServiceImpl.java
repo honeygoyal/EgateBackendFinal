@@ -121,6 +121,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 true, true, true, true, grantedAuth);
     }
 
+    @Override
+    public void forgotPassword(String emailId) throws Exception {
+        UserInfo userInfo = userRepository.findByEmailId(emailId);
+        if(userInfo == null) {throw new Exception("User not found");}
+        String password = randomAlphaNumeric(8);
+        System.out.println(password);
+        sendmail(userInfo, password);
+        userInfo.setPassword(bCryptPasswordEncoder.encode(password));
+        userRepository.save(userInfo);
+    }
+
     public UserInfo save(UserInfo user) {
         return userRepository.save(user);
     }
