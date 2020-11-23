@@ -57,7 +57,7 @@ public enum AttributeType implements Serializable
     {
         AttributeType type = null;
         if(value.equalsIgnoreCase(SECTION.toString())) type = AttributeType.SECTION;
-        else if(Pattern.matches("\\d", value)) type = AttributeType.QUESTION_LABEL;
+        else if(Pattern.matches("\\d+", value)) type = AttributeType.QUESTION_LABEL;
         else if(value.equalsIgnoreCase(MARKS.toString())) type = AttributeType.MARKS;
         else if(value.equalsIgnoreCase(NEGATIVE_MARKS.toString())) type = AttributeType.NEGATIVE_MARKS;
         else if(value.equalsIgnoreCase(QUESTION_TYPE.toString())) type = AttributeType.QUESTION_TYPE;
