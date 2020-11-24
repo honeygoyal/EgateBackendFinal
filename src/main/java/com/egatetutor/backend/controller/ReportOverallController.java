@@ -82,7 +82,7 @@ public class ReportOverallController {
         }
         reportOverall.setStatus(reportOverallRequest.getStatus());
         reportOverall.setTotalTime(reportOverallRequest.getTotalTime());
-        List<QuestionAnalysis> questionAnalysisList = reportGeneratorService.getQuestionAnalysis(user.get().getId(),
+        List<QuestionAnalysis> questionAnalysisList = reportGeneratorService.getOverAllReportAnalysis(user.get().getId(),
                 coursesDescription.get().getId());
         double markSecured = questionAnalysisList.stream().mapToDouble(QuestionAnalysis::getMarkSecured)
                 .sum();
