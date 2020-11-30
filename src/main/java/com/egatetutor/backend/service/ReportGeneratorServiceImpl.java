@@ -22,7 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 public class ReportGeneratorServiceImpl implements ReportGeneratorService {
@@ -47,7 +48,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
     public List<QuestionAnalysis> getQuestionAnalysis(Long userId, Long courseId) throws Exception {
         List<ReportDetail> allUserReport = reportDetailRepository.findAllReportDetailOfAllUser(courseId);
         Map<QuestionLayout, List<ReportDetail>> questionToReportListMap =
-                allUserReport.parallelStream().collect(Collectors.groupingBy(ReportDetail::getQuestion_id));
+                allUserReport.parallelStream().collect(groupingBy(ReportDetail::getQuestion_id));
         List<QuestionAnalysis> questionAnalysesList = getOverAllReportAnalysis(userId, courseId);
         return questionAnalysesList.parallelStream().peek(questionAnalysis -> {
             List<ReportDetail> questWiseAllUserReport = new ArrayList<>();
@@ -56,7 +57,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
             questionAnalysis.setTotalAttempt(questWiseAllUserReport.size()); /* Number of Report generated for user*/
             List<ReportDetail> correctSolutionReport = questWiseAllUserReport.stream().filter(
                     p -> checkCorrectAns(questionAnalysis.getQuestion().getQuestionType(), questionAnalysis.getQuestion().getAnswer(), p.getAnswerSubmitted())
-            ).collect(Collectors.toList());
+            ).collect(toList());
             questionAnalysis.setCorrectAttempt(correctSolutionReport.size());
             int unAttemptQ = (int) questWiseAllUserReport.stream().filter(
                     p -> (p.getAnswerSubmitted() == null || p.getAnswerSubmitted().isEmpty())
@@ -74,7 +75,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
                 double averageTime = averageTimeOptional.getAsDouble();
                 questionAnalysis.setAverageTime(averageTime + "");
             }
-        }).collect(Collectors.toList());
+        }).collect(toList());
     }
 
     @Override
@@ -111,7 +112,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
                 questionAnalysis.setYourAnswer(reportDetail.get().getAnswerSubmitted());
             }
             return questionAnalysis;
-        }).collect(Collectors.toList());
+        }).collect(toList());
     }
 
     @Override
@@ -123,12 +124,19 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
         if (!reportOverall.getStatus().equals(CoursesStatus.COMPLETED.name())) {
             throw new Exception("Exam is not complete");
         }
+        List<ReportDetail> reportDetailList = reportDetailRepository.findReportDetailListByCompositeId(userId, courseId); /*User Report detail list for all question of courseId*/
         TestAnalytics testAnalytics = new TestAnalytics();
         testAnalytics.setCorrect(reportOverall.getCorrect());
         testAnalytics.setInCorrect(reportOverall.getInCorrect());
         testAnalytics.setUnAttempt(reportOverall.getUnAttempt());
         testAnalytics.setMarksSecured(reportOverall.getScore());
         testAnalytics.setTotalTimeTaken(reportOverall.getTotalTime());
+        Map<Long,String> questionToTimeMap =
+                reportDetailList.parallelStream().
+                collect(toMap(
+                p->p.getQuestion_id().getId(),
+                ReportDetail::getTimeTaken));
+        testAnalytics.setQuestionToTimeTaken(questionToTimeMap);
         return testAnalytics;
     }
 
@@ -162,7 +170,7 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
                             p.getScore(), p.getTotalTime(), p.getCourseId().getDuration(), p.getUserRank(), profileString
 
                     );
-                }).collect(Collectors.toList());
+                }).collect(toList());
 
         return userRankList;
     }
