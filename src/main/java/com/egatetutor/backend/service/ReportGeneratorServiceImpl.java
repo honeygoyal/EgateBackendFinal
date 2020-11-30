@@ -131,10 +131,10 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
         testAnalytics.setUnAttempt(reportOverall.getUnAttempt());
         testAnalytics.setMarksSecured(reportOverall.getScore());
         testAnalytics.setTotalTimeTaken(reportOverall.getTotalTime());
-        Map<Long,String> questionToTimeMap =
+        Map<Integer,String> questionToTimeMap =
                 reportDetailList.parallelStream().
                 collect(toMap(
-                p->p.getQuestion_id().getId(),
+                p->p.getQuestion_id().getQuestionLabel(),
                 ReportDetail::getTimeTaken));
         testAnalytics.setQuestionToTimeTaken(questionToTimeMap);
         return testAnalytics;

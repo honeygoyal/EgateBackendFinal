@@ -10,13 +10,13 @@ public class TestAnalytics {
     private double totalMarks;
     private String totalTimeTaken;
     private Long Rank;
-    private Map<Long, String> questionToTimeTaken;
+    private Map<Integer, String> questionToTimeTaken;
 
-    public Map<Long, String> getQuestionToTimeTaken() {
+    public Map<Integer, String> getQuestionToTimeTaken() {
         return questionToTimeTaken;
     }
 
-    public void setQuestionToTimeTaken(Map<Long, String> questionToTimeTaken) {
+    public void setQuestionToTimeTaken(Map<Integer, String> questionToTimeTaken) {
         this.questionToTimeTaken = questionToTimeTaken;
     }
 
