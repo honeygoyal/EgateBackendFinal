@@ -92,6 +92,14 @@ public class UserController {
             } catch (Exception exception) {
                 System.out.println("Path is not correct");
             }
+            try{
+                S3Object signObj = s3client.getObject(new GetObjectRequest(bucketName, userEntity.getSignature()));
+                byte[] signatureImage = IOUtils.toByteArray(signObj.getObjectContent()); //Files.readAllBytes(profileImagepath);
+                String signatureString = Base64.getEncoder().encodeToString(signatureImage);
+                userEntity.setSignature(signatureString);
+            }catch (Exception exception){
+                System.out.println("Signature Image path is not correct");
+            }
         }
             JwtResponse jwtResponse = new JwtResponse(token, userEntity);
             return ResponseEntity.status(HttpStatus.OK).body(jwtResponse);
