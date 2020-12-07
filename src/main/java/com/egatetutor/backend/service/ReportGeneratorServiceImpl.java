@@ -146,8 +146,14 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
         long[] no = {0L};
         long[] rank = {0L};
         List<ReportOverall> reportOverallList = reportOverallRepository.findRankByCourseId(courseId);
-        List<UserRank> userRankList = reportOverallList.stream()
-                .sorted((a, b) -> (int) (b.getScore() - a.getScore()))
+
+        return reportOverallList.stream()
+                .sorted(new Comparator<ReportOverall>() {
+                    @Override
+                    public int compare(ReportOverall o1, ReportOverall o2) {
+                        return o2.getScore().compareTo(o1.getScore());
+                    }
+                })
                 .map(p -> {
                     ++no[0];
                     if (score[0] != p.getScore()) rank[0] = no[0];
@@ -171,8 +177,6 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
 
                     );
                 }).collect(toList());
-
-        return userRankList;
     }
 
     private boolean checkCorrectAns(String qType, String answer, String answerSubmitted) {

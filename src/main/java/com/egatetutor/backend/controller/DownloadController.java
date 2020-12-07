@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -55,6 +56,8 @@ public class DownloadController {
             @RequestPart(value = "label2File", required = true) MultipartFile label2File,
              DownloadRequest downloadRequest
             ) throws IOException {
+
+        Optional<Download> downloadOp = downloadRepository.findDownloadByExamAndSubsectionAndBranchAndTopic(downloadRequest.getExam(),downloadRequest.getSubsection(),downloadRequest.getBranch(), downloadRequest.getTopic());
         String BASE_URL = env.getProperty("download_url");
         InputStream stream = new ByteArrayInputStream(label1File.getBytes());
         ObjectMetadata meta = new ObjectMetadata();
@@ -76,7 +79,8 @@ public class DownloadController {
         stream2.close();
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        Download download = modelMapper.map(downloadRequest, Download.class);
+        Download download;
+        download = downloadOp.orElseGet(() -> modelMapper.map(downloadRequest, Download.class));
         download.setURL1(BASE_URL+"/"+fileName1);
         download.setURL2(BASE_URL+"/"+fileName2);
         downloadRepository.save(download);
