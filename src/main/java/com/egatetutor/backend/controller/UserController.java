@@ -3,6 +3,7 @@ package com.egatetutor.backend.controller;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
+import com.egatetutor.backend.enumType.VerificationStatus;
 import com.egatetutor.backend.model.UserInfo;
 import com.egatetutor.backend.model.responsemodel.JwtRequest;
 import com.egatetutor.backend.model.responsemodel.JwtResponse;
@@ -66,6 +67,7 @@ public class UserController {
         UserInfo createdUser = null;
         try {
             createdUser = userService.createUser(userDto);
+            createdUser.setVerified(VerificationStatus.UNVERIFIED.name());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Exception("Email ID already Registered"));
         }
@@ -180,6 +182,7 @@ public class UserController {
             user.setPhoto(profileUrl.toString());
             user.setSignature(signatureUrl.toString());
             user.setGovtId(govtIdUrl.toString());
+            user.setVerified(VerificationStatus.PENDING.name());
             userRepository.save(user);
             user.setPhoto(photo);
             user.setGovtId(govtId);
@@ -226,7 +229,10 @@ public class UserController {
         Optional<UserInfo> userInfo = userRepository.findById(userId);
         if (!userInfo.isPresent()) throw new Exception("User doesn't Exists");
         UserInfo user = userInfo.get();
-        user.setVerified(isVerified);
+        if(isVerified)
+        user.setVerified(VerificationStatus.VERIFIED.name());
+        else
+            user.setVerified(VerificationStatus.REJECTED.name());
         user.setComment(comment);
         userRepository.save(user);
         return new ResponseEntity<>("{}", HttpStatus.OK);

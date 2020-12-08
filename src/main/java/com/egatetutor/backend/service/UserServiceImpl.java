@@ -1,5 +1,6 @@
 package com.egatetutor.backend.service;
 
+import com.egatetutor.backend.enumType.VerificationStatus;
 import com.egatetutor.backend.model.UserInfo;
 import com.egatetutor.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         System.out.println(password);
         userDetails.setPassword(bCryptPasswordEncoder.encode(password));
         userDetails.setIsAdmin(false);
-        userDetails.setVerified(false);
+        userDetails.setVerified(VerificationStatus.UNVERIFIED.name());
         UserInfo existingUser = userRepository.findByEmailId(userDetails.getEmailId());
         if (existingUser != null) {
             throw new Exception("User already exists with this email");
