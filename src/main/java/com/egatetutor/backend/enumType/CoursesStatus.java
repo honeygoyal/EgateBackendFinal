@@ -1,5 +1,5 @@
 package com.egatetutor.backend.enumType;
 
 public enum CoursesStatus {
-    INACTIVE, START, PENDING, COMPLETED, USER_UNVERIFIED
+    INACTIVE, START, PENDING, COMPLETED
 }
