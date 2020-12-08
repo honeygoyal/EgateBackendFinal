@@ -52,7 +52,7 @@ public class CoursesDescServiceImpl implements CoursesDescriptionService {
 			if(!examIdSet.contains(examId)){
 				testResponseModel.setStatus(CoursesStatus.INACTIVE.name());
 			}else{
-				if(!userInfo.isVerified().equals(VerificationStatus.VERIFIED.name()) && !userInfo.getIsAdmin())
+				if(!userInfo.getIsVerified().equals(VerificationStatus.VERIFIED.name()) && !userInfo.getIsAdmin())
 					testResponseModel.setStatus(CoursesStatus.INACTIVE.name());
 				else{
 				ReportOverall reportOverall = reportOverallRepository.findReportByCompositeId(userInfo.getId(), coursesDescription.getId());

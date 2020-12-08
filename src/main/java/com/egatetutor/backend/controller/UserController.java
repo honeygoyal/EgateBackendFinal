@@ -67,7 +67,7 @@ public class UserController {
         UserInfo createdUser = null;
         try {
             createdUser = userService.createUser(userDto);
-            createdUser.setVerified(VerificationStatus.UNVERIFIED.name());
+            createdUser.setIsVerified(VerificationStatus.UNVERIFIED.name());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Exception("Email ID already Registered"));
         }
@@ -182,7 +182,7 @@ public class UserController {
             user.setPhoto(profileUrl.toString());
             user.setSignature(signatureUrl.toString());
             user.setGovtId(govtIdUrl.toString());
-            user.setVerified(VerificationStatus.PENDING.name());
+            user.setIsVerified(VerificationStatus.PENDING.name());
             userRepository.save(user);
             user.setPhoto(photo);
             user.setGovtId(govtId);
@@ -230,9 +230,9 @@ public class UserController {
         if (!userInfo.isPresent()) throw new Exception("User doesn't Exists");
         UserInfo user = userInfo.get();
         if(isVerified)
-        user.setVerified(VerificationStatus.VERIFIED.name());
+        user.setIsVerified(VerificationStatus.VERIFIED.name());
         else
-            user.setVerified(VerificationStatus.REJECTED.name());
+            user.setIsVerified(VerificationStatus.REJECTED.name());
         user.setComment(comment);
         userRepository.save(user);
         return new ResponseEntity<>("{}", HttpStatus.OK);

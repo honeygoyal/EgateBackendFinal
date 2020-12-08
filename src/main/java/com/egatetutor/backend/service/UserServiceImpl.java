@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         System.out.println(password);
         userDetails.setPassword(bCryptPasswordEncoder.encode(password));
         userDetails.setIsAdmin(false);
-        userDetails.setVerified(VerificationStatus.UNVERIFIED.name());
+        userDetails.setIsVerified(VerificationStatus.UNVERIFIED.name());
         UserInfo existingUser = userRepository.findByEmailId(userDetails.getEmailId());
         if (existingUser != null) {
             throw new Exception("User already exists with this email");

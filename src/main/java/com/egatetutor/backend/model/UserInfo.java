@@ -170,11 +170,11 @@ public class UserInfo {
         this.password = password;
     }
 
-    public String isVerified() {
+    public String getIsVerified() {
         return isVerified;
     }
 
-    public void setVerified(String verified) {
+    public void setIsVerified(String verified) {
         isVerified = verified;
     }
 
@@ -184,5 +184,13 @@ public class UserInfo {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
