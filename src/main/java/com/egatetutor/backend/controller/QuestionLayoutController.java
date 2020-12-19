@@ -78,7 +78,8 @@ public class QuestionLayoutController {
 
         Map<String, List<QuestionLayoutResponse>> questionMap  = new HashMap<>();
         List<ReportDetail> reportDetailList = reportDetailRepository.findReportDetailListByCompositeId(userId, coursesDescription.get().getId());
-
+        String[] totalTime = new String[1];
+        totalTime[0] = "0";
         for (QuestionLayoutResponse questionLayout : questionLayoutResponseList) {
             S3Object questObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getQuestion()));
             S3Object solObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getSolution()));
@@ -96,14 +97,19 @@ public class QuestionLayoutController {
                 questionLayout.setQuestionStatus(detail.getQuestionStatus());
                 questionLayout.setTimeTaken(detail.getTimeTaken());
                 questionLayout.setTotalTimeTaken(detail.getReportId().getTotalTime());
+                totalTime[0] = detail.getReportId().getTotalTime();
                 });
             }
+
             if (questionMap.containsKey(questionLayout.getSection())) {
                 tempList = questionMap.get(questionLayout.getSection());
                 tempList.add(questionLayout);
                 questionMap.put(questionLayout.getSection(), tempList);
             } else {
                 tempList.add(questionLayout);
+                if(!totalTime[0].isEmpty()){
+                    tempList.get(0).setTotalTimeTaken(totalTime[0]);
+                }
                 questionMap.put(questionLayout.getSection(), tempList);
             }
         }
