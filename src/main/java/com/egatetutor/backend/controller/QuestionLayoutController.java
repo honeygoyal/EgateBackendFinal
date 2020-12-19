@@ -30,19 +30,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 
 @RestController
@@ -78,6 +71,9 @@ public class QuestionLayoutController {
             throw new Exception("courseId is not present. Please create test");
         }
         List<QuestionLayout> questionList = questionRepository.findQuestionsById(coursesDescription.get().getId());
+        if(questionList == null || questionList.size() == 0){
+            throw new Exception("Questions doesn't exits");
+        }
         List<QuestionLayoutResponse> questionLayoutResponseList = modelMapper.map(questionList, new TypeToken<List<QuestionLayoutResponse>>() {}.getType());
 
         Map<String, List<QuestionLayoutResponse>> questionMap  = new HashMap<>();
@@ -143,11 +139,16 @@ public class QuestionLayoutController {
             }
             coursesDescription = t.get();
             question.setCourseId(coursesDescription);
+            boolean isTableExist = false;
             while (bodyElementIterator.hasNext()) {
                 IBodyElement element = (IBodyElement) bodyElementIterator.next();
 
                 if ("TABLE".equalsIgnoreCase(element.getElementType().name())) {
+                    isTableExist = true;
                     List<XWPFTable> tableList = element.getBody().getTables();
+                    if(tableList == null || tableList.size() == 0){
+                        throw new InvalidFormatException("Table is in invalid format");
+                    }
                     for (XWPFTable table : tableList) {
                         int k = 1;
                         for (int i = 0; i < table.getRows().size(); i++) {
@@ -228,6 +229,10 @@ public class QuestionLayoutController {
                         }
                     }
                 }
+                if(!isTableExist){
+                    throw new InvalidFormatException("Table doesn't exist");
+                }
+
             }
 
 
