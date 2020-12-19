@@ -99,6 +99,7 @@ public class QuestionLayoutController {
                 {questionLayout.setAnswerSubmitted(detail.getAnswerSubmitted());
                 questionLayout.setQuestionStatus(detail.getQuestionStatus());
                 questionLayout.setTimeTaken(detail.getTimeTaken());
+                questionLayout.setTotalTimeTaken(detail.getReportId().getTotalTime());
                 });
             }
             if (questionMap.containsKey(questionLayout.getSection())) {
