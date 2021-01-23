@@ -111,7 +111,7 @@ public class QuestionBankController {
         try{
             File testFile = new File("test");
             FileUtils.writeByteArrayToFile(testFile, file.getBytes());
-            String BASE_URL = env.getProperty("image_base_url");
+            String BASE_URL = env.getProperty("image_question_bank_url");
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(testFile));
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
             List<QuestionBank> questionsList = new ArrayList();
