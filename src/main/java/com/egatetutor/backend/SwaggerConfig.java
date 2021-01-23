@@ -34,8 +34,9 @@ public class SwaggerConfig {
                 regex("/reportDetail.*"),
                 regex("/reportOverall.*"),
                 regex("/download.*"),
-                regex("/books.*"),
-                regex("/banner.*")
+                regex("/books.*"), regex("/banner.*"),
+                regex("/questionBank.*"),
+                regex("/coursesDetailForQB.*")
                 );
     }
     private ApiInfo apiInfo() {
