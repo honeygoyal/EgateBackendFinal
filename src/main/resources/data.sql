@@ -1015,5 +1015,69 @@ VALUES
 (
 '147', 'PSU', 'DEMO eSTUDY MATERIAL', '0', 'ALL', 'DEMO-PSU-ESM'
 );
+/* INSERT QUERY NO: 148*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'148', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'ME', 'ME-ESE-OTS'
+);
+/* INSERT QUERY NO: 149*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'149', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'CE', 'CE-ESE-OTS'
+);
+/* INSERT QUERY NO: 150*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'150', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'EE', 'EE-ESE-OTS'
+);
+/* INSERT QUERY NO: 151*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'151', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'EX', 'EX-ESE-OTS'
+);
 
+/* INSERT QUERY NO: 152*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'152', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'MA', 'MA-IIT-JAM-OTS'
+);
+
+/* INSERT QUERY NO: 153*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'153', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'PH', 'PH-IIT-JAM-OTS'
+);
+/* INSERT QUERY NO: 154*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'154', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'MS', 'MS-IIT-JAM-OTS'
+);
+
+
+/* INSERT QUERY NO: 155*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'155', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'MA', 'MA-TIFR-OTS'
+);
+
+/* INSERT QUERY NO: 156*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'156', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'PH', 'PH-TIFR-OTS'
+);
+/* INSERT QUERY NO: 157*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'157', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'CS', 'CS-TIFR-OTS'
+);
 
