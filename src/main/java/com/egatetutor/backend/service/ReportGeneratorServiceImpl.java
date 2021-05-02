@@ -204,6 +204,24 @@ public class ReportGeneratorServiceImpl implements ReportGeneratorService {
                 double ansSub = Double.parseDouble(answerSubmitted);
                 isCorrect = ansSub <= upperLimit && ansSub >= lowerLimit;
                 break;
+            case TF:
+                if(
+                        answer.equalsIgnoreCase("true") ||
+                        answer.equalsIgnoreCase("T") ||
+                        answer.equalsIgnoreCase("Yes") ||
+                                answer.equalsIgnoreCase("Y")
+                ){
+                    isCorrect = answerSubmitted.equalsIgnoreCase("true");
+                }
+                else if( answer.equalsIgnoreCase("false") ||
+                        answer.equalsIgnoreCase("F") ||
+                        answer.equalsIgnoreCase("No") ||
+                        answer.equalsIgnoreCase("N")){
+                    isCorrect = answerSubmitted.equalsIgnoreCase("false");
+                }else{
+                    isCorrect = false;
+                }
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + questionType);
         }
