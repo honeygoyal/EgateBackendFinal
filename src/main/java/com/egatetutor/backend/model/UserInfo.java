@@ -45,7 +45,7 @@ public class UserInfo {
     private boolean isAdmin;
 
     @Column(name = "verified")
-    private boolean isVerified;
+    private String isVerified;
 
     @Column(name = "comment")
     private String comment;
@@ -170,11 +170,11 @@ public class UserInfo {
         this.password = password;
     }
 
-    public boolean isVerified() {
+    public String getIsVerified() {
         return isVerified;
     }
 
-    public void setVerified(boolean verified) {
+    public void setIsVerified(String verified) {
         isVerified = verified;
     }
 
@@ -184,5 +184,13 @@ public class UserInfo {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

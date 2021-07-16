@@ -1,7 +1,4 @@
 package com.egatetutor.backend.repository;
-
-
-
 import com.egatetutor.backend.model.CoursesDescription;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -1015,5 +1015,146 @@ VALUES
 (
 '147', 'PSU', 'DEMO eSTUDY MATERIAL', '0', 'ALL', 'DEMO-PSU-ESM'
 );
+/* INSERT QUERY NO: 148*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'148', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'ME', 'ME-ESE-OTS'
+);
+/* INSERT QUERY NO: 149*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'149', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'CE', 'CE-ESE-OTS'
+);
+/* INSERT QUERY NO: 150*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'150', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'EE', 'EE-ESE-OTS'
+);
+/* INSERT QUERY NO: 151*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'151', 'ESE', 'ESE ONLINE TEST SERIES', '1299', 'EX', 'EX-ESE-OTS'
+);
+
+/* INSERT QUERY NO: 152*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'152', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'MA', 'MA-IIT-JAM-OTS'
+);
+
+/* INSERT QUERY NO: 153*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'153', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'PH', 'PH-IIT-JAM-OTS'
+);
+/* INSERT QUERY NO: 154*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'154', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'MS', 'MS-IIT-JAM-OTS'
+);
 
 
+/* INSERT QUERY NO: 155*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'155', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'MA', 'MA-TIFR-OTS'
+);
+
+/* INSERT QUERY NO: 156*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'156', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'PH', 'PH-TIFR-OTS'
+);
+/* INSERT QUERY NO: 157*/
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+'157', 'TIFR', 'TIFR ONLINE TEST SERIES', '1299', 'CS', 'CS-TIFR-OTS'
+);
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '158', 'GATE', 'GATE ONLINE TEST SERIES', '1299', 'PH', 'PH-GATE-OTS'
+);
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '159', 'JEST', 'JEST ONLINE TEST SERIES', '1299', 'PH', 'PH-JEST-OTS'
+);
+
+
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '160', 'GATE', 'GATE ONLINE TEST SERIES', '1299', 'ST', 'ST-GATE-OTS'
+);
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '161', 'IIT-JAM', 'IIT-JAM ONLINE TEST SERIES', '1299', 'ST', 'ST-IIT-JAM-OTS'
+);
+
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '162', 'GATE', 'GATE ONLINE TEST SERIES', '1299', 'ES', 'ES-GATE-OTS'
+);
+
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '163', 'GATE', 'GATE QUESTION BANK', '1999', 'PH', 'PH-GATE-QB'
+);
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '164', 'IIT-JAM', 'IIT-JAM QUESTION BANK', '1999', 'PH', 'PH-IIT-JAM-QB'
+);
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '165', 'TIFR', 'TIFR QUESTION BANK', '1999', 'PH', 'PH-TIFR-QB'
+);
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '166', 'JEST', 'JEST QUESTION BANK', '1999', 'PH', 'PH-JEST-QB'
+);
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '167', 'GATE', 'GATE QUESTION BANK', '1999', 'ST', 'ST-GATE-QB'
+);
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '168', 'IIT-JAM', 'IIT-JAM QUESTION BANK', '1999', 'ST', 'ST-IIT-JAM-QB'
+);
+
+
+
+INSERT INTO courses_offered( id,exam_name, exam_name_service, price, branch, exam_id)
+VALUES
+(
+    '169', 'GATE', 'GATE QUESTION BANK', '1999', 'ES', 'ES-GATE-QB'
+);

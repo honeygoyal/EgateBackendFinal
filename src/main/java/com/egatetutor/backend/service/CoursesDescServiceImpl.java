@@ -3,6 +3,7 @@ package com.egatetutor.backend.service;
 
 
 import com.egatetutor.backend.enumType.CoursesStatus;
+import com.egatetutor.backend.enumType.VerificationStatus;
 import com.egatetutor.backend.model.CoursesDescription;
 import com.egatetutor.backend.model.CoursesOffered;
 import com.egatetutor.backend.model.ReportOverall;
@@ -51,8 +52,8 @@ public class CoursesDescServiceImpl implements CoursesDescriptionService {
 			if(!examIdSet.contains(examId)){
 				testResponseModel.setStatus(CoursesStatus.INACTIVE.name());
 			}else{
-				if(!userInfo.isVerified() && !userInfo.getIsAdmin())
-					testResponseModel.setStatus(CoursesStatus.USER_UNVERIFIED.name());
+				if(!userInfo.getIsVerified().equals(VerificationStatus.VERIFIED.name()) && !userInfo.getIsAdmin())
+					testResponseModel.setStatus(CoursesStatus.INACTIVE.name());
 				else{
 				ReportOverall reportOverall = reportOverallRepository.findReportByCompositeId(userInfo.getId(), coursesDescription.getId());
 				String status = (reportOverall != null)? reportOverall.getStatus(): CoursesStatus.START.name();

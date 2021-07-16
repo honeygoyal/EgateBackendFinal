@@ -1,5 +1,6 @@
 package com.egatetutor.backend.service;
 
+import com.egatetutor.backend.enumType.VerificationStatus;
 import com.egatetutor.backend.model.UserInfo;
 import com.egatetutor.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     "Visit FAQs section on www.egatetutor.in \r\n" +
                     "Admission issues related Queries: support@egatetutor.in \r\n" +
                     "Technical Issues related Queries: egatetutor@gmail.com \r\n" +
-                    "(In case of queries call between 10:00 AM to 6:00 PM. Mon - Sun) \r\n" +
+                    "(In case of queries call between 10:00 AM to 6:00 PM. Mon - Sun) \r\n \r\n" +
+                    "Note : Please upload your verification documents after you login to your account. " +
+                    "We will take 24-48 hours to complete the verification process Once verified, " +
+                    "you will receive a verification mail regarding the status of your account. \r\n" +
+                    "Upon successful verification proceed to the course registered else correct the documents submitted for verification. \r \n \r \n"+
                     "For more information regarding GATE, iPATE, PSU prepration. Connect with us: \r\n" +
                     "Website: http://www.egatetutor.in/ \r\n" +
                     "Facebook: https://www.facebook.com/egate.tutor.18 \r\n" +
@@ -95,7 +100,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         System.out.println(password);
         userDetails.setPassword(bCryptPasswordEncoder.encode(password));
         userDetails.setIsAdmin(false);
-        userDetails.setVerified(false);
+        userDetails.setIsVerified(VerificationStatus.UNVERIFIED.name());
         UserInfo existingUser = userRepository.findByEmailId(userDetails.getEmailId());
         if (existingUser != null) {
             throw new Exception("User already exists with this email");

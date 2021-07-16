@@ -1,5 +1,7 @@
 package com.egatetutor.backend.model.responsemodel;
 
+import java.util.Map;
+
 public class TestAnalytics {
     private int correct;
     private int inCorrect;
@@ -8,6 +10,15 @@ public class TestAnalytics {
     private double totalMarks;
     private String totalTimeTaken;
     private Long Rank;
+    private Map<Integer, String> questionToTimeTaken;
+
+    public Map<Integer, String> getQuestionToTimeTaken() {
+        return questionToTimeTaken;
+    }
+
+    public void setQuestionToTimeTaken(Map<Integer, String> questionToTimeTaken) {
+        this.questionToTimeTaken = questionToTimeTaken;
+    }
 
     public String getTotalTimeTaken() {
         return totalTimeTaken;

@@ -21,6 +21,7 @@ public class QuestionLayoutResponse {
     private String answerSubmitted;
     private String questionStatus;
     private String timeTaken;
+    private String totalTimeTaken;
     public long getId() {
         return id;
     }
@@ -139,6 +140,14 @@ public class QuestionLayoutResponse {
 
     public void setTimeTaken(String timeTaken) {
         this.timeTaken = timeTaken;
+    }
+
+    public String getTotalTimeTaken() {
+        return totalTimeTaken;
+    }
+
+    public void setTotalTimeTaken(String totalTimeTaken) {
+        this.totalTimeTaken = totalTimeTaken;
     }
 }
 

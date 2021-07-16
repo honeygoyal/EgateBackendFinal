@@ -4,13 +4,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.egatetutor.backend.enumType.AttributeType;
-import com.egatetutor.backend.model.CoursesDescription;
-import com.egatetutor.backend.model.QuestionLayout;
-import com.egatetutor.backend.model.ReportDetail;
-import com.egatetutor.backend.model.responsemodel.QuestionLayoutResponse;
-import com.egatetutor.backend.repository.CoursesDescriptionRepository;
-import com.egatetutor.backend.repository.QuestionLayoutRepository;
-import com.egatetutor.backend.repository.ReportDetailRepository;
+import com.egatetutor.backend.model.questionbank.CoursesDescriptionQB;
+import com.egatetutor.backend.model.questionbank.QuestionBank;
+import com.egatetutor.backend.repository.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -20,7 +16,6 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.*;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,20 +31,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/questionLayout")
-public class QuestionLayoutController {
+@RequestMapping("/questionBank")
+public class QuestionBankController {
 
     @Autowired
-    private QuestionLayoutRepository questionRepository;
+    private QuestionBankRepository questionBankRepository;
 
     @Autowired
-    private CoursesDescriptionRepository coursesDescriptionRepository;
-
-    @Autowired
-    private ReportDetailRepository reportDetailRepository;
+    private CoursesDescriptionQBRepository coursesDescriptionQBRepository;
 
     @Autowired
     private Environment env;
@@ -61,45 +54,32 @@ public class QuestionLayoutController {
     private String bucketName;
 
     @GetMapping("/getQuestions")
-    public ResponseEntity<Map<String, List<QuestionLayoutResponse>>> getQuestionForTest(@RequestParam("courseId") String courseId,
+    public ResponseEntity<Map<String, List<QuestionBank>>> getQuestionForTest(@RequestParam("courseId") String courseId,
                                                                                         @RequestParam("userId") Long userId)
             throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        Optional<CoursesDescription> coursesDescription= coursesDescriptionRepository.findCoursesDescriptionByCourseId(courseId);
+        Optional<CoursesDescriptionQB> coursesDescription= coursesDescriptionQBRepository.findCoursesDescriptionByCourseId(courseId);
         if(!coursesDescription.isPresent()){
             throw new Exception("courseId is not present. Please create test");
         }
-        List<QuestionLayout> questionList = questionRepository.findQuestionsById(coursesDescription.get().getId());
+        List<QuestionBank> questionList = questionBankRepository.findQuestionsById(coursesDescription.get().getId());
         if(questionList == null || questionList.size() == 0){
             throw new Exception("Questions doesn't exits");
         }
-        List<QuestionLayoutResponse> questionLayoutResponseList = modelMapper.map(questionList, new TypeToken<List<QuestionLayoutResponse>>() {}.getType());
 
-        Map<String, List<QuestionLayoutResponse>> questionMap  = new HashMap<>();
-        List<ReportDetail> reportDetailList = reportDetailRepository.findReportDetailListByCompositeId(userId, coursesDescription.get().getId());
-        String[] totalTime = new String[1];
-        totalTime[0] = "0";
-        for (QuestionLayoutResponse questionLayout : questionLayoutResponseList) {
+        Map<String, List<QuestionBank>> questionMap  = new HashMap<>();
+
+        for (QuestionBank questionLayout : questionList) {
             S3Object questObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getQuestion()));
             S3Object solObject = s3client.getObject(new GetObjectRequest(bucketName, questionLayout.getSolution()));
             byte[] imageque =   IOUtils.toByteArray(questObject.getObjectContent());  //Files.readAllBytes(quePath);
             byte[] imagesol = IOUtils.toByteArray(solObject.getObjectContent()); // Files.readAllBytes(solPath);
             String encodedQuestion = Base64.getEncoder().encodeToString(imageque);
             String encodedSolution = Base64.getEncoder().encodeToString(imagesol);
-            List<QuestionLayoutResponse> tempList = new ArrayList<>();
+            List<QuestionBank> tempList = new ArrayList<>();
             questionLayout.setQuestion(encodedQuestion);
             questionLayout.setSolution(encodedSolution);
-            if(reportDetailList!=null){
-                Optional<ReportDetail> reportDetail = reportDetailList.stream().filter(p->p.getQuestion_id().getId() == questionLayout.getId()).findFirst();
-                reportDetail.ifPresent(detail ->
-                {questionLayout.setAnswerSubmitted(detail.getAnswerSubmitted());
-                questionLayout.setQuestionStatus(detail.getQuestionStatus());
-                questionLayout.setTimeTaken(detail.getTimeTaken());
-                questionLayout.setTotalTimeTaken(detail.getReportId().getTotalTime());
-                totalTime[0] = detail.getReportId().getTotalTime();
-                });
-            }
 
             if (questionMap.containsKey(questionLayout.getSection())) {
                 tempList = questionMap.get(questionLayout.getSection());
@@ -107,9 +87,6 @@ public class QuestionLayoutController {
                 questionMap.put(questionLayout.getSection(), tempList);
             } else {
                 tempList.add(questionLayout);
-                if(!totalTime[0].isEmpty()){
-                    tempList.get(0).setTotalTimeTaken(totalTime[0]);
-                }
                 questionMap.put(questionLayout.getSection(), tempList);
             }
         }
@@ -134,13 +111,13 @@ public class QuestionLayoutController {
         try{
             File testFile = new File("test");
             FileUtils.writeByteArrayToFile(testFile, file.getBytes());
-            String BASE_URL = env.getProperty("image_base_url");
+            String BASE_URL = env.getProperty("image_question_bank_url");
             XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(testFile));
             Iterator bodyElementIterator = xdoc.getBodyElementsIterator();
-            List<QuestionLayout> questionsList = new ArrayList();
-            QuestionLayout question = new QuestionLayout();
-            Optional<CoursesDescription> t = coursesDescriptionRepository.findCoursesDescriptionByCourseId(courseId);
-            CoursesDescription coursesDescription = null;
+            List<QuestionBank> questionsList = new ArrayList();
+            QuestionBank question = new QuestionBank();
+            Optional<CoursesDescriptionQB> t = coursesDescriptionQBRepository.findCoursesDescriptionByCourseId(courseId);
+            CoursesDescriptionQB coursesDescription = null;
             if (!t.isPresent()) {
                 throw new NoSuchElementException("No such course is present");
             }
@@ -166,12 +143,6 @@ public class QuestionLayoutController {
                             switch (type) {
                                 case SECTION:
                                     question.setSection(actualText);
-                                    break;
-                                case MARKS:
-                                    question.setMarks(Double.parseDouble(actualText));
-                                    break;
-                                case NEGATIVE_MARKS:
-                                    question.setNegativeMarks(Double.parseDouble(actualText));
                                     break;
                                 case QUESTION_TYPE:
                                     question.setQuestionType(actualText);
@@ -221,16 +192,13 @@ public class QuestionLayoutController {
                                 case DIFFICULTY:
                                     question.setQuestionDifficulty(actualText);
                                     break;
-                                case VIDEO_LINK:
-                                    question.setVideoLink(actualText);
-                                    break;
                             }
 
                             k++;
-                            if (k == 10) {
+                            if (k == 7) {
                                 questionsList.add(question);
                                 k = 1;
-                                question = new QuestionLayout();
+                                question = new QuestionBank();
                                 question.setCourseId(coursesDescription);
                             }
                         }
@@ -241,10 +209,8 @@ public class QuestionLayoutController {
                 }
 
             }
-
-
-            for(QuestionLayout q: questionsList){
-                questionRepository.save(q);
+            for(QuestionBank q: questionsList){
+                questionBankRepository.save(q);
             }
 
         } catch (IOException | InvalidFormatException e) {
@@ -253,7 +219,5 @@ public class QuestionLayoutController {
         }
         return new ResponseEntity<String>("{}", HttpStatus.OK);
     }
-
-
 
 }
