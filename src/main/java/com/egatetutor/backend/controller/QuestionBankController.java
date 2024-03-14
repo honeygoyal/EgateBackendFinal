@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/questionBank")
 public class QuestionBankController {

@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/questionLayout")
 public class QuestionLayoutController {

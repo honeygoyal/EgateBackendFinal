@@ -36,6 +36,9 @@ public class CoursesDescription implements Serializable {
 
     private String title;
 
+    @Column(name = "syllabus")
+    private String syllabus;
+
     @Lob
     private String description;
 
